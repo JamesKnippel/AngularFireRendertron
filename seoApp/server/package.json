@@ -1,0 +1,59 @@
+{
+  "name": "rendertron",
+  "version": "1.1.0",
+  "description": "Renders webpages using headless Chrome for usage by bots",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/GoogleChrome/rendertron",
+  "engines": {
+    "node": ">=7"
+  },
+  "main": "src/main.js",
+  "bin": "bin/rendertron",
+  "scripts": {
+    "start": "node src/main.js",
+    "lint": "eslint src/*.js test/*.js",
+    "monitor": "nodemon src/main.js",
+    "monitor-inspect": "nodemon --inspect src/main.js",
+    "test": "cd test/resources && yarn && ava ../app-test.js",
+    "start-emulator": "(gcloud beta emulators datastore start --project emulator-project &) 2>&1 | grep -m1 'now running'",
+    "test-cache": "yarn start-emulator && $(gcloud beta emulators datastore env-init) && export GCLOUD_PROJECT='emulator-project' && ava test/cache-test.js"
+  },
+  "dependencies": {
+    "@google-cloud/datastore": "^1.0.6",
+    "@webcomponents/webcomponentsjs": "^1.0.3",
+    "chrome-launcher": "^0.8.0",
+    "chrome-remote-interface": "^0.24.1",
+    "compression": "^1.7.0",
+    "express": "^4.15.2",
+    "performance-now": "^2.1.0",
+    "progress-bar-element": "^2.0.1",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "ava": "^0.20.0",
+    "eslint": "^4.1.1",
+    "eslint-config-google": "^0.8.0",
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0"
+  },
+  "eslintConfig": {
+    "extends": "google",
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "new-cap": 0,
+      "max-len": 0,
+      "no-warning-comments": 0,
+      "curly": 0,
+      "comma-dangle": 0,
+      "eqeqeq": 0,
+      "no-eq-null": 0,
+      "require-jsdoc": 0
+    },
+    "parserOptions": {
+      "ecmaVersion": 8,
+      "sourceType": "module"
+    }
+  }
+}
